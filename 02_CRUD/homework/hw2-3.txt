@@ -1,0 +1,8 @@
+$ python validate.py
+Welcome to the HW 2.3 validation tester
+Trying to create a test user  UHpkOZT
+Found the test user  UHpkOZT  in the users collection
+User creation successful. 
+Trying to login for test user  UHpkOZT
+User login successful.
+Validation Code is  jkfds5834j98fnm39njf0920f02
