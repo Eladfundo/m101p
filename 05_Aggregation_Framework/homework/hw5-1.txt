@@ -1,0 +1,41 @@
+Download Handouts:
+
+    posts.json
+
+Finding the most frequent author of comments on your blog
+In this assignment you will use the aggregation framework to find the most frequent author of comments on your blog. We will be using a data set similar to ones we've used before.
+Start by downloading the handout zip file for this problem. Then import into your blog database as follows:
+
+mongoimport --drop -d blog -c posts posts.json
+
+Now use the aggregation framework to calculate the author with the greatest number of comments.
+To help you verify your work before submitting, the author with the fewest comments is Mariela Sherer and she commented 387 times.
+Please choose your answer below for the most prolific comment author:
+
+Choose the best answer:
+Elizabet Kleine
+
+
+> db.posts.aggregate([{$unwind:"$comments"},{$group:{_id:"$comments.author", num:{$sum:1}}},{$sort:{num:-1}}])
+{ "_id" : "Elizabet Kleine", "num" : 503 }
+{ "_id" : "Carli Belvins", "num" : 480 }
+{ "_id" : "Mariette Batdorf", "num" : 478 }
+{ "_id" : "Gwyneth Garling", "num" : 477 }
+{ "_id" : "Eugene Magdaleno", "num" : 475 }
+{ "_id" : "Milan Mcgavock", "num" : 472 }
+{ "_id" : "Corliss Zuk", "num" : 472 }
+{ "_id" : "Leonida Lafond", "num" : 472 }
+{ "_id" : "Sadie Jernigan", "num" : 471 }
+{ "_id" : "Dusti Lemmond", "num" : 471 }
+{ "_id" : "Cassi Heal", "num" : 467 }
+{ "_id" : "Devorah Smartt", "num" : 466 }
+{ "_id" : "Tambra Mercure", "num" : 465 }
+{ "_id" : "Tressa Schwing", "num" : 465 }
+{ "_id" : "Malisa Jeanes", "num" : 464 }
+{ "_id" : "Lady Lefevers", "num" : 464 }
+{ "_id" : "Grady Zemke", "num" : 464 }
+{ "_id" : "Sanda Ryba", "num" : 461 }
+{ "_id" : "Lucinda Vanderburg", "num" : 460 }
+{ "_id" : "Verdell Sowinski", "num" : 459 }
+Type "it" for more
+>

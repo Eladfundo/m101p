@@ -1,0 +1,81 @@
+Download Handouts:
+
+    Small_grades_file.zip
+
+Who's the easiest grader on campus?
+Download the handout and mongoimport.
+The documents look like this:
+
+{
+    "_id" : ObjectId("50b59cd75bed76f46522c392"),
+    "student_id" : 10,
+    "class_id" : 5,
+    "scores" : [
+        {
+            "type" : "exam",
+            "score" : 69.17634380939022
+        },
+        {
+            "type" : "quiz",
+            "score" : 61.20182926719762
+        },
+        {
+            "type" : "homework",
+            "score" : 73.3293624199466
+        },
+        {
+            "type" : "homework",
+            "score" : 15.206314042622903
+        },
+        {
+            "type" : "homework",
+            "score" : 36.75297723087603
+        },
+        {
+            "type" : "homework",
+            "score" : 64.42913107330241
+        }
+    ]
+}
+
+There are documents for each student (student_id) across a variety of classes (class_id). Note that not all students in the same class have the same exact number of assessments. Some students have three homework assignments, etc.
+Your task is to calculate the class with the best average student performance. This involves calculating an average for each student in each class of all non-quiz assessments and then averaging those numbers to get a class average. To be clear, each student's average includes only exams and homework grades. Don't include their quiz scores in the calculation.
+What is the class_id which has the highest average student performance?
+Hint/Strategy: You need to group twice to solve this problem. You must figure out the GPA that each student has achieved in a class and then average those numbers to get a class average. After that, you just need to sort. The class with the lowest average is the class with class_id=2. Those students achieved a class average of 37.6
+You can download the handout and perform your analysis on your machine with
+
+mongoimport --drop -d test -c grades grades.json
+
+
+Below, choose the class_id with the highest average student average.
+
+Please use the Aggregation pipeline to solve this problem.
+
+1
+
+
+
+
+db.grades.aggregate([{$unwind:"$scores"},{$match:{"scores.type":{$ne:"quiz"}}},{$group:{_id:{student_id:"$student_id","class_id":"$class_id"},gpa:{$avg:"$scores.score"}}},{$group:{_id:"$_id.class_id",avg_gpa:{$avg:"$gpa"}}},{$sort:{avg_gpa:-1}}])
+{ "_id" : 1, "avg_gpa" : 64.50642324269175 }
+{ "_id" : 5, "avg_gpa" : 58.08448767613548 }
+{ "_id" : 20, "avg_gpa" : 57.6309834548989 }
+{ "_id" : 26, "avg_gpa" : 56.06918278769095 }
+{ "_id" : 9, "avg_gpa" : 55.56861693456625 }
+{ "_id" : 14, "avg_gpa" : 55.36017373346247 }
+{ "_id" : 24, "avg_gpa" : 53.610345978016596 }
+{ "_id" : 16, "avg_gpa" : 53.45833539362425 }
+{ "_id" : 13, "avg_gpa" : 52.738286239952366 }
+{ "_id" : 4, "avg_gpa" : 52.655415610658586 }
+{ "_id" : 17, "avg_gpa" : 52.42469177746091 }
+{ "_id" : 23, "avg_gpa" : 51.932848307630394 }
+{ "_id" : 3, "avg_gpa" : 51.77424986629819 }
+{ "_id" : 0, "avg_gpa" : 50.64317695848949 }
+{ "_id" : 19, "avg_gpa" : 50.59071928635092 }
+{ "_id" : 27, "avg_gpa" : 50.581113085660526 }
+{ "_id" : 11, "avg_gpa" : 49.952812365344215 }
+{ "_id" : 29, "avg_gpa" : 49.305440602697246 }
+{ "_id" : 7, "avg_gpa" : 48.87708798013475 }
+{ "_id" : 6, "avg_gpa" : 48.41485242956824 }
+Type "it" for more
+>
